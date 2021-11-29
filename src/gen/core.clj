@@ -1,5 +1,6 @@
 (ns gen.core
   (:require [clojure.core.async :as async]
+            [clojure.string :as string]
             [selmer.parser :as parser]
             [clojure.java.io :as io]
             [clojure.test :as test]
@@ -146,11 +147,11 @@
                      utils/merge-list)]
     [config content results]))
 
-(defn ->write-templates!
+(defn ->write-files!
   "writes the output files which should be in format"
   {:test (fn []
            (let [temp (gensym)] ;; temporary value to test for
-             (->write-templates! [{} ;; config ignored
+             (->write-files! [{} ;; config ignored
                                   {} ;; content ignored
                                   {"tests/test.html" {:template-file "test.html"
                                                       :context {:a temp}}}])
@@ -162,11 +163,22 @@
   (->> output
        (map (fn [[file-name {context :context
                              template-file :template-file}]]
-              (let [out-file-name (str "./_dist/" file-name)
-                    out-file-content (parser/render-file template-file context)]
+              (let [out-file-name (str "./_dist/" file-name)]
                 (log/debug "! writing file " out-file-name)
                 (io/make-parents out-file-name)
-                (spit out-file-name out-file-content))))
+                (cond (string/ends-with? file-name ".html") ;; TODO or other things
+                      (let [c (parser/render-file template-file context)]
+                        (spit out-file-name c))
+                      (string/ends-with? file-name ".css")
+                      (let [c (parser/render-file template-file context)]
+                        (spit out-file-name c))
+                      (or (string/ends-with? file-name ".jpg")
+                          (string/ends-with? file-name ".woff"))
+                      (with-open [in (io/input-stream (str (:template-dir config) "/" template-file))
+                                  out (io/output-stream out-file-name)]
+                        (io/copy in out)))
+                      )
+                ))
        doall)
   ;; return unchanged from side effect
   [config content output])
@@ -183,7 +195,7 @@
       ->load-templates
       ->apply-content-context
       ->expand-templates
-      ->write-templates!))
+      ->write-files!))
 
 (defn build-this-website [] (build-site (config) (content)))
 

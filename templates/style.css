@@ -1,5 +1,94 @@
 :root {
-  --main-bg-color: brown;
+    --color-white: #fefefe;
+    --color-black: #133333;
+    --color-grey: #889;
+    --color-grey-light: #dde;
+    --color-cyan: #8cd7d9;
+    --max-width: 1000px;
+    --box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+
 }
 
-body { color: red; }
+@font-face { font-family: Junicode;
+             font-style: normal;
+             font-weight: normal;
+             font-stretch: normal;
+             src: url('font/Junicode.woff') format('woff'); }
+
+html, body { margin: 0; padding: 0; }
+
+body { font-family: Junicode;
+       color: var(--color-black);
+       background-color: var(--color-white);
+       background: url('./resources/images/back-image.jpg') no-repeat;
+       background-size: cover;
+       background-position: center center;
+       min-height: 100vh;
+     }
+
+.menu { height: 3rem;
+        position: fixed;
+        width: 100%;
+        background-color: var(--color-white);
+        box-shadow: var(--box-shadow);
+        top: 0;
+      }
+.menu-inner {
+    max-width: var(--max-width);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 100%;
+}
+.menu-item { flex: 1;
+             display: flex;
+             justify-content: center;
+             align-items: center; }
+
+a { color: var(--color-cyan);
+    text-decoration: none; }
+a:visited { color: var(--color-cyan); }
+
+
+
+.gallery-meta {
+    display: flex;
+    justify-content: right;
+}
+.gallery-subtext {
+    color: var(--color-grey);
+    padding-right: 1rem;
+}
+
+.gallery-item {
+    background-color: var(--color-white);
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+.gallery-image img {
+    width: 100%;
+}
+
+.gallery-items {
+    column-count: 3;
+    padding: 2rem;
+    max-width: 2000px;
+    margin: 0 auto;
+    column-gap: 2rem;
+    row-gap: 2rem;
+    margin-top: 40vh;
+}
+@media screen and (max-width: 1024px) {
+    .gallery-items {
+        column-count: 2;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .gallery-items {
+        column-count: 1;
+    }
+}

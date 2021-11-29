@@ -4,15 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>A Basic HTML5 Template</title>
-  <meta name="description" content="A simple HTML5 Template for new projects.">
-  <meta name="author" content="SitePoint">
+  <title>{% block title %}Noel'le Longhaul | Tattoo{% endblock %}</title>
 
-  <meta property="og:title" content="A Basic HTML5 Template">
+  <meta name="keywords" content="queer, tattoo, freehand"/>
+  <meta name="robots" content="index,follow" />
+
+  {% block meta-desctiption %}
+  <meta name="description" content="Freehand tattoo artist based in the northeast US.  Books open; all are welcome.">
+  <meta property="og:description" content="Freehand tattoo artist based in the northeast US.  Books open; all are welcome.">
+  {% endblock %}
+  {% block meta-title %}
+  <meta property="og:title" content="Noel'le Longhaul | Tattoo">
+  {% endblock %}
+  {% block meta-image %}
+  <meta property="og:image" content="resources/images/main-image-cropped.jpg">
+  {% endblock %}
+
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.sitepoint.com/a-basic-html5-template/">
-  <meta property="og:description" content="A simple HTML5 Template for new projects.">
-  <meta property="og:image" content="image.png">
 
   <link rel="icon" href="/favicon.ico">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -23,6 +31,23 @@
 </head>
 
 <body>
+  {% block header %}
+  <div class="menu">
+    <div class="menu-inner">
+        <div class="menu-item">
+        <a href="./">Gallery</a>
+        </div>
+        <div class="menu-item">
+        Noel'le Longhaul
+        </div>
+        <div class="menu-item">
+        <a href="./">Book</a>
+        </div>
+        </div>
+    </div>
+
+  {% endblock %}
+
   {% block main %}
 
   {% endblock %}

@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
 
 {% block main %}
-hello here we have some content
 
+<div class="gallery-items">
 {% for img in gallery-images %}
 
-<hr>
-look at image: <a href="images/{{img.id}}.html">{{img.id}}</a>
-
+<div class="gallery-item">
+  <div class="gallery-image">
+    <img src="https:{{img.image-url}}" />
+  </div>
+  <div class="gallery-meta">
+    <div class="gallery-subtext">
+        {{img.subtext}}
+    </div>
+    <div class="gallery-link">
+        <a href="images/{{img.id}}.html">link -></a>
+    </div>
+  </div>
+</div>
 {% endfor %}
+</div>
 
 {% endblock %}
