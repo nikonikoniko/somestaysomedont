@@ -42,12 +42,16 @@ jobs:
         run: clojure -M:build
         shell: bash
         
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with: 
+          key: ${{ secrets.OPALSTACK_SSH_PRIVATE }}
+          known_hosts: 'placeholder'
+          
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.OPALSTACK_HOST }} >> ~/.ssh/known_hosts
+
+        
       - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.OPALSTACK_HOST }}
-          username: github
-          password: ${{ secrets.OPALSTACK_PASS }}
-          port: 22
-          source: "_dist/*"
-          target: "/home/uer/apps/somestaysomedont/*"
+        run: scp -r _dist/* github@{{ secrets.OPALSTACK_PASS }}:~/apps/somestaysomedont
+         
