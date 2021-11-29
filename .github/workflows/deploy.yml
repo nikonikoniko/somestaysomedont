@@ -52,5 +52,5 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.OPALSTACK_HOST }} >> ~/.ssh/known_hosts
         
       - name: copy file via ssh password
-        run: scp -r _dist/* github@${{ secrets.OPALSTACK_HOST }}:~/apps/somestaysomedont
+        run: scp -r _dist/* github@${{ secrets.OPALSTACK_HOST }}:/home/uer/apps/somestaysomedont
          
