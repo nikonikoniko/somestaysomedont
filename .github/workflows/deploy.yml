@@ -53,5 +53,5 @@ jobs:
 
         
       - name: copy file via ssh password
-        run: scp -r _dist/* github@{{ secrets.OPALSTACK_PASS }}:~/apps/somestaysomedont
+        run: scp -r _dist/* github@{{ secrets.OPALSTACK_HOST }}:~/apps/somestaysomedont
          
