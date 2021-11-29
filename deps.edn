@@ -10,7 +10,7 @@
         clj-contentful {:mvn/version "1.0.0"}}
 
  ;; include both the generator, and the resources,
- :paths ["src" "resources" "templates"]
+ :paths ["src" "resources" "templates" "testing-templates"]
 
  ;;   you can use the command line to run the server, using
  ;;   `clj -M:run` - which runs the script run, launching the main

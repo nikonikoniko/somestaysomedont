@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block main %}
+hello here we have some content
+
+{% for img in gallery-images %}
+
+<hr>
+look at image: <a href="images/{{img.id}}.html">{{img.id}}</a>
+
+{% endfor %}
+
+{% endblock %}

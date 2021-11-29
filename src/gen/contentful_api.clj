@@ -12,11 +12,13 @@
 
 (def map-image
   (fn [g]
-    {:subtext     (-> g :fields :subtext :content first :content first :value)
+    {:id          (-> g :sys :id)
+     :subtext     (-> g :fields :subtext :content first :content first :value)
      :image-url   (-> g :fields :image :sys :id get-asset :fields :file :url)}))
 
-(defn gallery-images []
-  (->> {:content_type "galleryImage"}
-       (contentful/entries config)
-       (map map-image)))
+(defn get_images []
+  (contentful/entries config {:content_type "galleryImage"}))
 
+(defn gallery-images []
+  (->>  (get_images)
+       (map map-image)))
