@@ -41,3 +41,13 @@ jobs:
       - name: Execute clojure code on Linux and MacOS
         run: clojure -M:build
         shell: bash
+        
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.OPALSTACK_HOST }}
+          username: github
+          password: ${{ secrets.OPALSTACK_PASS }}
+          port: 22
+          source: "_dist/*"
+          target: "~/apps/somestaysomedont"
