@@ -50,4 +50,4 @@ jobs:
           password: ${{ secrets.OPALSTACK_PASS }}
           port: 22
           source: "_dist/*"
-          target: "~/apps/somestaysomedont"
+          target: "/home/uer/apps/somestaysomedont"
