@@ -173,6 +173,9 @@
                       (let [c (parser/render-file template-file context)]
                         (spit out-file-name c))
                       (or (string/ends-with? file-name ".jpg")
+                          (string/ends-with? file-name ".ico")
+                          (string/ends-with? file-name ".png")
+                          (string/ends-with? file-name ".webmanifest")
                           (string/ends-with? file-name ".woff"))
                       (with-open [in (io/input-stream (str (:template-dir config) "/" template-file))
                                   out (io/output-stream out-file-name)]
