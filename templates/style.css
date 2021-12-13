@@ -13,7 +13,7 @@
              font-style: normal;
              font-weight: normal;
              font-stretch: normal;
-             src: url('font/Junicode.woff') format('woff'); }
+             src: url('/resources/font/Junicode.woff') format('woff'); }
 
 html, body { margin: 0; padding: 0; }
 
@@ -30,7 +30,8 @@ body { font-family: Junicode;
 .menu { height: 3rem;
         position: fixed;
         width: 100%;
-        background-color: var(--color-white);
+        background-color: var(--color-black);
+        color: var(--color-white);
         box-shadow: var(--box-shadow);
         top: 0;
       }
@@ -51,6 +52,12 @@ a { color: var(--color-cyan);
     text-decoration: none; }
 a:visited { color: var(--color-cyan); }
 
+.page {
+    max-width: 80rem;
+    margin: 0 auto;
+    margin-top: 20rem;
+}
+
 
 
 .gallery-meta {
@@ -63,7 +70,7 @@ a:visited { color: var(--color-cyan); }
 }
 
 .gallery-item {
-    background-color: var(--color-white);
+    background-color: var(--color-black);
     padding: 2rem;
     box-shadow: var(--box-shadow);
     margin-bottom: 2rem;

@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
 
 {% block main %}
-ho ho
-{{gallery-images-item.subtext}}
-<img src="https://{{gallery-images-item.image-url}}" />
+
+<div class="page">
+<div class="gallery-item">
+  <div class="gallery-image">
+    <img src="https://{{gallery-images-item.image-url}}" />
+  </div>
+  <div class="gallery-meta">
+    <div class="gallery-subtext">
+    </div>
+  </div>
+</div>
+</div>
 
 {% endblock %}
