@@ -1,6 +1,6 @@
 :root {
     --color-white: #fefefe;
-    --color-black: #133333;
+    --color-black: #233333;
     --color-grey: #889;
     --color-grey-light: #dde;
     --color-cyan: #8cd7d9;
@@ -87,7 +87,6 @@ a:visited { color: var(--color-cyan); }
     margin: 0 auto;
     column-gap: 2rem;
     row-gap: 2rem;
-    margin-top: 40vh;
 }
 @media screen and (max-width: 1024px) {
     .gallery-items {
@@ -99,4 +98,12 @@ a:visited { color: var(--color-cyan); }
     .gallery-items {
         column-count: 1;
     }
+}
+
+.name {
+    margin-top: 15vh;
+    margin-bottom: 15vh;
+    color: var(--color-white);
+    text-align: center;
+    font-size: 3rem;
 }
