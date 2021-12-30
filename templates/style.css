@@ -75,6 +75,8 @@ a:visited { color: var(--color-cyan); }
     box-shadow: var(--box-shadow);
     margin-bottom: 2rem;
     display: inline-block;
+    min-width: 100%;
+    min-height: 50rem;
 }
 .gallery-image img {
     width: 100%;
