@@ -4,3 +4,6 @@
 
 
 (defn debug [& args] (println args))
+(defn warn [& args] (println args))
+
+(defn tap [x] (debug x) x)

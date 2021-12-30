@@ -6,6 +6,7 @@
             [clojure.test :as test]
             [gen.contentful-api :as contentful]
             [gen.log :as log]
+            [gen.template :as template]
             [gen.payload :as payload]
             [gen.utils :as utils]))
 
@@ -98,50 +99,29 @@
   {:test (fn [] (test/is (= (->expand-templates {:config  {}                                                     ; no config needed
                                                  :content {:blogs [{:slug "post-1-slug"} {:slug "post-2-slug"}]} ; the content has some blogs
                                                  ;; you should see any filenames that have jinja templates in them be expanded:
-                                                 :output  {"blog/{{blogs.slug}}.html" {:template-file "blog/{{blogs.slug}}.html"
-                                                                                       :context       {}}
+                                                 :output  {"blog/{{blogs..EACH.slug}}.html" {:template-file "blog/{{blogs..EACH.slug}}.html"
+                                                                                             :context       {:og "keep"}}
                                                            ;; and the other ones get left alone
-                                                           "test.html"                {:template-file "test.html"
-                                                                                       :context       {}}}})
+                                                           "test.html"                      {:template-file "test.html"
+                                                                                             :context       {}}}})
                             {:config  {}                                                     ;; config is unchanged
                              :content {:blogs [{:slug "post-1-slug"} {:slug "post-2-slug"}]} ;; content is unchanged
                              ;; filenames have been expanced
-                             :output  {"blog/post-1-slug.html" {:template-file "blog/{{blogs.slug}}.html", :context {:blogs-item {:slug "post-1-slug"}}},
-                                       "blog/post-2-slug.html" {:template-file "blog/{{blogs.slug}}.html", :context {:blogs-item {:slug "post-2-slug"}}},
+                             :output  {"blog/post-1-slug.html" {:template-file "blog/{{blogs..EACH.slug}}.html", :context {:item {:slug "post-1-slug"}
+                                                                                                                           :og   "keep"}},
+                                       "blog/post-2-slug.html" {:template-file "blog/{{blogs..EACH.slug}}.html", :context {:item {:slug "post-2-slug"}
+                                                                                                                           :og   "keep"}},
                                        "test.html"             {:template-file "test.html", :context {}}}})))}
   [{:as     data
     content :content}]
   (log/debug "calling ->expand-templates")
   (->> data
-       (payload/map-output (fn [file-name file-data]
-                             (let [known-vars (parser/known-variables file-name)]
-                               (if (empty? known-vars)
-                                 {file-name file-data} ;; if there is nothing to do, return the output-item as-is
-                                 ;; else, let's expand the file name
-                                 (do (log/debug "expanding " file-name)
-                                     (log/debug known-vars)
-                                     ;; get the key of the known vars out of the content map
-                                     (->> known-vars
-                                          (map (fn [known-var-key]
-                                                 (log/debug "looking for " known-var-key " in content")
-                                                 ;; TODO split known var by `.` i.e. :blogs.2021 -> :blogs :2021
-                                                 (let [val (known-var-key content)]
-                                                   (cond (or (seq? val)
-                                                             (list? val)
-                                                             (vector? val)) (do (log/debug "found vector, applying each to template")
-                                                                                (->> val
-                                                                                     (map (fn [item]
-                                                                                            (let [filename-context {known-var-key item}
-                                                                                                  extra-context    {(keyword (str (name known-var-key) "-item")) item}
-                                                                                                  existing-context (:context file-data)
-                                                                                                  new-context      (merge existing-context extra-context)
-                                                                                                  parsed-filename  (parser/render file-name filename-context)]
-                                                                                              {parsed-filename (assoc file-data :context new-context)})))
-                                                                                     flatten
-                                                                                     utils/merge-list))
-                                                         :else              (log/debug "don't know how to expand " val)))))
-                                          flatten
-                                          utils/merge-list)))))
+       (payload/map-output (fn [template-name file-data]
+                             (->> (template/itemize content template-name)
+                                  (map (fn [[file-name new-context]]
+                                         {file-name (merge file-data {:context (merge (:context file-data) new-context)})}))
+                                  utils/merge-list)
+                             )
                            )))
 
 (defn ->write-files!

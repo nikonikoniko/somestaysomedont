@@ -4,9 +4,11 @@
             [com.rpl.specter :as specter]
             [gen.utils :as utils]
             [gen.log :as log]
+            [clojure.test :as test]
 
             [clojure.string :as string]
-            [selmer.parser :as parser]))
+            [selmer.parser :as parser]
+            [clojure.string :as str]))
 
 ;;
 ;;  config specs
@@ -64,16 +66,12 @@
   {:pre  []
    :post (s/valid? ::payload %)}
   (specter/transform [:output] #(->> %
-                                     (map (fn [[file-name output-data]] (f file-name output-data)))
+                                     log/tap
+                                     (map (fn [[file-name output-data]]
+                                            (f file-name output-data)))
                                      flatten
                                      utils/merge-list) payload))
 
-;; (parser/known-variables "{{content..lang}}/{{content..lang..blogs..slug}}")
 
-;; (specter/select [:content specter/MAP-VALS :blogs specter/ALL :slug]
-;;                 {:content {:en {:blogs [{:slug "1"}
-;;                                         {:slug "2"}
-;;                                         {:slug "3"}]}
-;;                            :es {:blogs [{:slug "4"}
-;;                                         {:slug "5"}
-;;                                         {:slug "6"}]}}})
+;;(specter/select [:content :blogs specter/ALL :slug]
+;;              )
