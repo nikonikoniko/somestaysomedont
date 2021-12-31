@@ -1,0 +1,198 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Watercolor | Elvira Para</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel='stylesheet' href='style.css' />
+
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">
+      You are using an <strong>outdated</strong> browser. Please
+      <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+      your experience.
+      </p>
+    <![endif]-->
+    <div class="menu">
+      <img class="logo" src="./resources/img/text_logo_ekp.png">
+      <ul>
+        <li><a href="./index.html">About</a></li>
+        <li><a href="./watercolor.html">Watercolor</a></li>
+        <li><a href="./encaustic.html">Encaustic</a></li>
+        <li><a href="./classes.html">Classes</a></li>
+        <li><a href="#">Artisan Shop</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <small class="page-subheader">Elvira Para</small>
+        <h1 class="page-title page-title-with-image">Encaustic</h1>
+        <img class="page-title-image" src="./resources/img/text_encaustic.png">
+      </div>
+
+      <p class="category-description">
+        Encaustic is the practice of wax. A new technique for Elvira.
+      </p>
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/13.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 9"x24"
+        </div>
+      </div>
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/12.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 6"x6"
+        </div>
+      </div>
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/11.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 6"x6"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/10.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 6"x8"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/9.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 16"x22"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/8.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 12"x22"
+        </div>
+      </div>
+
+
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/7.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 6"x12"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/6.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 6"x12"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/5.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 11"x14"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/4.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 9"x12"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/3.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 6"x6"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/2.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 12"x16"
+        </div>
+      </div>
+
+
+      <div class="work">
+        <div class="image">
+          <img src="resources/img/encaustic/1.jpg" />
+        </div>
+        <div class="description">
+          Untitled - Encaustic - 12"x16"
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <div class="side-content">
+
+    </div>
+
+    <script type="text/javascript">
+      let height = window.screen.height
+
+      const els = document.getElementsByClassName("work");
+
+      document.addEventListener('scroll', () => {
+        let scrolltop = window.scrollY
+        Array.from(els).forEach(el => {
+          // blockOpacity = ($(window).height() + $(window).scrollTop() - block.offset().top) / blockHeight;
+          blockOpacity = (height + scrolltop - el.offsetTop) / el.offsetHeight;
+          el.style.opacity = blockOpacity;
+        })
+      })
+      </script>
+
+  </body>
+</html>

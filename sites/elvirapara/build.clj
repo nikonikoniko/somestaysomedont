@@ -11,11 +11,14 @@
   (-> {:config  config
        :content content
        :output  {}}
-      ))
+      gen/->load-templates
+      gen/->apply-content-context
+      gen/->expand-templates
+      gen/->write-files!))
 
 (defn build-this-website [] (build-site (config) (content)))
 
 (defn -main []
-(build-this-website)
-(println "running main function main function"))
+  (build-this-website)
+  (println "running main function main function"))
 

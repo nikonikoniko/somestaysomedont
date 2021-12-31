@@ -1,0 +1,158 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;1,200&display=swap');
+@font-face {
+font-family: calluna;
+font-style: normal;
+font-weight: normal;
+font-stretch: normal;
+src: url('font/calluna.woff2') format('woff2');
+}
+@font-face {
+font-family: Haas;
+font-style: normal;
+font-weight: normal;
+font-stretch: normal;
+src: url('font/neue-haas-medium.woff2') format('woff2');
+}
+
+
+
+:root {
+    --color-dark: rgba(0,0,0,.9);
+    --color-gray: #bbb;
+    --color-faint: rgba(0,0,0,.01);
+    --color-less-faint: rgba(0,0,0,.05);
+    --color-highlight: #839376;
+    --color-light:  #fbf8ef;
+    --color-light:  #fffdf8;
+    --color-faint-light: rgba(255,255,255,.8);
+    --headline: "Spectral", serif;
+    --serif: "Spectral";
+    --spacing: 2rem;
+    --spacing-double: 4rem;
+    --spacing-half: 1rem;
+}
+
+body {
+    color: #333;
+
+    font-family: "Spectral";
+    font-weight: 200;
+    margin: 0 auto;
+
+    display: flex;
+    padding: var(--spacing-double);
+}
+
+.content-header {
+    margin-bottom: var(--spacing-half);
+    margin-top: 0;
+}
+.content-header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 4rem;
+    padding-left: var(--spacing-half);
+}
+.content-header small {
+   padding-left: var(--spacing-half)
+}
+
+.menu {
+    padding: 0 var(--spacing-double);
+    padding-left: var(--spacing-half);
+    padding-right: var(--spacing-double);
+    padding-top: var(--spacing-half);
+    position: sticky;
+top: 0;
+  align-self: flex-start; /* <-- this is the fix */
+}
+
+.content {
+    padding: 0 var(--spacing-half);
+    padding-right: var(--spacing);
+    width: 100%;
+}
+.content img {
+    width: 100%;
+}
+.content p {
+    max-width: 30rem;
+    margin: 0;
+    padding: 0;
+    margin-top: var(--spacing-half);
+    padding-left: var(--spacing-half);
+}
+
+.menu ul, .menu ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a, a:visited {
+    color: var(--color-gray);
+    text-decoration: none;
+     transition: .8s;
+}
+a:hover {
+    color: teal;
+}
+
+img.main-image {
+    max-width: 40rem;
+rotate: -2deg;
+margin-top: -.8rem;
+margin-left: -.8rem;
+}
+
+p.category-description {
+    margin-bottom: var(--spacing-double)
+}
+
+.content img {
+    filter: drop-shadow(0px 3px 3px rgba(0,0,0,.3));
+}
+
+.work {
+    margin-bottom: var(--spacing-double);
+    position: relative;
+}
+.work .image {
+    display: flex;
+}
+.work .image img {
+max-width: 100%;
+max-height: 90vh;
+object-fit: contain;
+object-position: 0 0;
+flex-grow: 1;
+
+}
+
+.work .description {
+    padding: var(--spacing-half);
+    padding-left: var(--spacing-half);
+    color: #666;
+    max-width: 20em;
+    font-style: italic;
+}
+
+
+.logo {
+    max-width: 6rem;
+    opacity: .6;
+}
+.page-title-image {
+    max-width: 20rem;
+    display: block;
+    opacity: .6;
+    margin-left: -1rem;
+}
+.page-title-with-image {
+    color: white;
+    position: absolute;
+}
+.page-subheader {
+    font-style: italic;
+}
