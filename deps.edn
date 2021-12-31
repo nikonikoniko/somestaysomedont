@@ -19,6 +19,7 @@
  ;;   `clj -M:run` - which runs the script run, launching the main
  ;;                  function into an http server
  :aliases {:build-somestaysomedont {:main-opts ["-m" "somestaysomedont.build"]}
+           :build-elvirapara       {:main-opts ["-m" "elvirapara.build"]}
            ;;   the nrepl, which you can run with
            ;;     `clj -M:nrepl` -> this starts up an nrepl that you can connect to with cider!
            ;;       you will see the output in the terminal where you started it
