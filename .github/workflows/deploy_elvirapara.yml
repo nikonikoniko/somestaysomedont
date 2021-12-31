@@ -52,5 +52,5 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.OPALSTACK_HOST }} >> ~/.ssh/known_hosts
         
       - name: copy file via ssh password
-        run: scp -r sites/elvirapara/fake_dist/* github@${{ secrets.OPALSTACK_HOST }}:/home/uer/apps/elvirapara
+        run: scp -r sites/elvirapara/fake_dist/* github@${{ secrets.OPALSTACK_HOST }}:/home/github/apps/elvirapara
          
