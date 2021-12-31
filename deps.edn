@@ -13,17 +13,17 @@
         clj-contentful                {:mvn/version "1.0.0"}}
 
  ;; include both the generator, and the resources,
- :paths ["src" "resources" "templates" "testing-templates"]
+ :paths ["src" "sites" "templates" "testing-templates"]
 
  ;;   you can use the command line to run the server, using
  ;;   `clj -M:run` - which runs the script run, launching the main
  ;;                  function into an http server
- :aliases {:build     {:main-opts ["-m" "gen.core"]}
+ :aliases {:build-somestaysomedont {:main-opts ["-m" "somestaysomedont.build"]}
            ;;   the nrepl, which you can run with
            ;;     `clj -M:nrepl` -> this starts up an nrepl that you can connect to with cider!
            ;;       you will see the output in the terminal where you started it
-           :repl      {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}}
-                       :main-opts  ["-m" "nrepl.cmdline"
-                                    "-b" "0.0.0.0"
-                                    "-p" "12345"]}
-           :main-opts ["-m" "depot.outdated.main"]}}
+           :repl                   {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}}
+                                    :main-opts  ["-m" "nrepl.cmdline"
+                                                 "-b" "0.0.0.0"
+                                                 "-p" "12345"]}
+           :main-opts              ["-m" "depot.outdated.main"]}}

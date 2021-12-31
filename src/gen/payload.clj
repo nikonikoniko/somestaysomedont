@@ -14,13 +14,15 @@
 ;;  config specs
 ;;
 (s/def ::template-dir string?)
+(s/def ::output-dir string?)
 
-(s/def ::config (s/keys :opt-un [::template-dir]))
+(s/def ::config (s/keys :opt-un [::template-dir]
+                        :req-un [::output-dir]))
 
 (s/valid? ::config
           {}) ; false
 (s/valid? ::config
-          {:template-dir "..."}) ; true
+          {:output-dir "..."}) ; true
 
 ;;
 ;;  content specs
@@ -66,7 +68,6 @@
   {:pre  []
    :post (s/valid? ::payload %)}
   (specter/transform [:output] #(->> %
-                                     log/tap
                                      (map (fn [[file-name output-data]]
                                             (f file-name output-data)))
                                      flatten

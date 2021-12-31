@@ -4,7 +4,6 @@
             [selmer.parser :as parser]
             [clojure.java.io :as io]
             [clojure.test :as test]
-            [gen.contentful-api :as contentful]
             [gen.log :as log]
             [gen.template :as template]
             [gen.payload :as payload]
@@ -65,6 +64,8 @@
                                                 {template {:template-file template
                                                            :context       content}}) templates)
                                          utils/merge-list) ]
+
+    (log/debug "found " (count templates) " templates in " template-dir)
     {:config  config
      :content content
      :output  output})) ;; TODO output get's replaced, need to merge
@@ -84,6 +85,7 @@
                              {"test.html" {:template-file "test.html",
                                            :context       {:some "content", :blogs [{:slug "first-post"}]}}}]
                             )))}
+  (log/debug "calling ->apply-content-context")
   (let [results (->> output
                      (map (fn [[k v]] {k (assoc-in v [:context] content)}))
                      flatten
@@ -140,48 +142,38 @@
     content :content
     output  :output}]
   (log/debug "calling ->write-templates!")
-  (->> output
-       (map (fn [[file-name {context       :context
-                             template-file :template-file}]]
-              (let [out-file-name (str "./_dist/" file-name)]
-                (log/debug "! writing file " out-file-name)
-                (io/make-parents out-file-name)
-                (cond (string/ends-with? file-name ".html") ;; TODO or other things
-                      (let [c (parser/render-file template-file context)]
-                        (spit out-file-name c))
-                      (string/ends-with? file-name ".css")
-                      (let [c (parser/render-file template-file context)]
-                        (spit out-file-name c))
-                      (or (string/ends-with? file-name ".jpg")
-                          (string/ends-with? file-name ".ico")
-                          (string/ends-with? file-name ".png")
-                          (string/ends-with? file-name ".webmanifest")
-                          (string/ends-with? file-name ".woff"))
-                      (with-open [in  (io/input-stream (str (:template-dir config) "/" template-file))
-                                  out (io/output-stream out-file-name)]
-                        (io/copy in out)))
-                )
-              ))
-       doall)
-  ;; return unchanged from side effect
-  data)
+  (let [{output-dir   :output-dir
+         template-dir :template-dir
+         :or          {output-dir   "./_dist"
+                       template-dir "testing-templates"}} config]
+
+    (parser/set-resource-path! (utils/path (utils/root) template-dir))
+    (->> output
+         (map (fn [[file-name {context       :context
+                               template-file :template-file}]]
+                (let [out-file-name (utils/path output-dir file-name)]
+                  (log/debug "! writing file " out-file-name)
+                  (io/make-parents out-file-name)
+                  (cond (string/ends-with? file-name ".html") ;; TODO or other things
+                        (let [c (parser/render-file template-file context)]
+                          (spit out-file-name c))
+                        (string/ends-with? file-name ".css")
+                        (let [c (parser/render-file template-file context)]
+                          (spit out-file-name c))
+                        (or (string/ends-with? file-name ".jpg")
+                            (string/ends-with? file-name ".ico")
+                            (string/ends-with? file-name ".png")
+                            (string/ends-with? file-name ".webmanifest")
+                            (string/ends-with? file-name ".woff"))
+                        (with-open [in  (io/input-stream (str (:template-dir config) "/" template-file))
+                                    out (io/output-stream out-file-name)]
+                          (io/copy in out)))
+                  )
+                ))
+         doall)
+    ;; return unchanged from side effect
+    data))
 
                                         ; (test/run-tests)
 
-(defn config [] {:template-dir "./templates"})
 
-(defn content [] {:site-title     "Some Stay Some Don't"
-                  :gallery-images (contentful/gallery-images)})
-
-(defn build-site [config content]
-  (-> {:config config :content content :output {}}
-      ->load-templates
-      ->apply-content-context
-      ->expand-templates
-      ->write-files!))
-
-(defn build-this-website [] (build-site (config) (content)))
-
-(defn -main []
-  (build-this-website)
-  (println "running main function main function"))

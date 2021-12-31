@@ -1,3 +1,5 @@
 _dist/*
+_dist
+*/_dist/*
 .cpcache
 .nrepl-port

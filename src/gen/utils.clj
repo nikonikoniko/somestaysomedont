@@ -1,5 +1,6 @@
 (ns gen.utils
   (:require [clojure.core.async :as async]
+            [clojure.test :as test]
             [clojure.string :as string]
             [selmer.parser :as parser]))
 
@@ -9,6 +10,15 @@
                            (file-seq (clojure.java.io/file dir))))
 
 (defn merge-list [list] (apply merge list))
+
+(defn root [] (.getCanonicalPath (clojure.java.io/file ".")))
+(defn path [& args]
+  {:test (fn []
+           (test/is (= (path "./_dist/" "/something")
+                       "./_dist/something")))}
+  (->> args
+       (string/join "/")
+       (#(string/replace %  #"[\\/]+" "/"))))
 
 (defn filenames [dir] (->> dir
                            clojure.java.io/file
