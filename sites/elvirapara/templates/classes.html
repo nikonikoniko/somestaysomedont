@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block description %}
+{{blocks.about-elvira}}
+{% endblock %}
+
+{% block content-header %}
+<small class="page-subheader">Elvira Para</small>
+<h1 class="page-title">Classes</h1>
+{% endblock %}
+
+{% block content %}
+<img class="main-image" src="resources/img/intro.jpg" />
+
+<p>
+  {{pages.classes}}
+</p>
+{% endblock %}
+

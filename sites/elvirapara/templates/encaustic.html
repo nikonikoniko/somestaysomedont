@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Encaustic{% endblock %}
+
+{% block description %}
+ {{blocks.about-encaustic}}
+ {{blocks.about-elvira}}
+{% endblock %}
+
+{% block content-header %}
+        <small class="page-subheader">Elvira Para</small>
+        <h1 class="page-title page-title-with-image">Encaustic</h1>
+        <img class="page-title-image" src="./resources/img/text_encaustic.png">
+{% endblock %}
+
+{% block content %}
+      <p class="category-description">
+        {{blocks.about-encaustic}}
+      </p>
+
+      {% for i in gallery-images.encaustic|sort-by:order %}
+      {{i.order}}
+      {% with subtext=i.subtext url=i.image-url %}
+        {% include "includes/work.html" %}
+      {% endwith %}
+      {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+      let height = window.screen.height
+
+      const els = document.getElementsByClassName("work");
+
+      document.addEventListener('scroll', () => {
+        let scrolltop = window.scrollY
+        Array.from(els).forEach(el => {
+          // blockOpacity = ($(window).height() + $(window).scrollTop() - block.offset().top) / blockHeight;
+          blockOpacity = (height + scrolltop - el.offsetTop) / el.offsetHeight;
+          el.style.opacity = blockOpacity;
+        })
+      })
+      </script>
+{% endblock %}
+
+
+
+
