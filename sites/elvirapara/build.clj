@@ -2,6 +2,7 @@
   (:require [gen.core :as gen]
             [cheshire.core :as json]
             [clojure.spec.alpha :as s]
+            [com.rpl.specter :as specter]
             [clj-img-resize.core :as i]
             [clojure.java.io :as io]
             [clj-http.client :as client]))
@@ -55,7 +56,16 @@
 
 (defn content []
   {:gallery-images (-> (fetch-gallery-items)
-                       (convert-gallery-items))})
+                       (convert-gallery-items)
+                       (#(group-by :type %))
+                       (#(map (fn [[typ items]] {:type typ :images items}) %))
+                       doall
+                       vec)})
+
+;; (def c (content))
+
+(content)
+
 
 (defn build-site [config content]
   (-> {:config  config
@@ -69,6 +79,6 @@
 (defn build-this-website [] (build-site (config) (content)))
 
 (defn -main []
-  (build-this-website)
-  (println "running main function main function"))
+(build-this-website)
+(println "running main function main function"))
 
