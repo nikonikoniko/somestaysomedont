@@ -19,7 +19,6 @@
       (io/copy (io/file (str path))) ;; Write the resulting stream into a file
       ))
 
-
 (defn download-asset [url]
   (println "downloading!" url)
   (println url)
@@ -38,12 +37,23 @@
   {:id        (-> g :id)
    :subtext   (-> g :attributes :subtext)
    :type      (-> g :attributes :type)
+   :order     (-> g :attributes :order)
    :image-url (-> g :attributes :image :data :attributes :url
                   (#(str "https://content.niko.io" %))
                   download-asset)})
+(defn convert-gallery-items [gs] (->> (map convert-gallery-item gs)
+                                      (group-by :type)))
 
-(defn convert-gallery-items [gs]
-  (map convert-gallery-item gs))
+(defn convert-block [b]
+  {(-> b :attributes :name) (-> b :attributes :content)})
+(defn convert-blocks [bs] (->> (map convert-block bs)
+                               (reduce merge)))
+
+(defn convert-page [b]
+  {(-> b :attributes :name) (-> b :attributes :content)})
+(defn convert-pages [bs] (->> (map convert-page bs)
+                              (reduce merge)))
+
 
 (defn fetch-gallery-items [] (-> (client/get "https://content.niko.io/api/gallery-items?pagination[pageSize]=100&populate=image"
                                              {:headers {"Authorization" (str "Bearer " token)}
@@ -52,29 +62,38 @@
                                  (json/parse-string true)
                                  :data))
 
+(defn fetch-blocks [] (-> (client/get "https://content.niko.io/api/blocks?pagination[pageSize]=100"
+                                      {:headers {"Authorization" (str "Bearer " token)}
+                                       :accept  :json})
+                          :body
+                          (json/parse-string true)
+                          :data))
+
+(defn fetch-pages [] (-> (client/get "https://content.niko.io/api/pages"
+                                     {:headers {"Authorization" (str "Bearer " token)}
+                                      :accept  :json})
+                         :body
+                         (json/parse-string true)
+                         :data))
 
 
 (defn content []
-  {:gallery-images (-> (fetch-gallery-items)
-                       (convert-gallery-items)
-                       (#(group-by :type %))
-                       (#(map (fn [[typ items]] {:type typ :images items}) %))
-                       doall
-                       vec)})
-
-;; (def c (content))
-
-(content)
-
+  {:title          "Site title"
+   :pages          (-> (fetch-pages)
+                       (convert-pages))  
+   :blocks         (-> (fetch-blocks)
+                       (convert-blocks))  
+   :gallery-images (-> (fetch-gallery-items)
+                       (convert-gallery-items))})
 
 (defn build-site [config content]
-  (-> {:config  config
-       :content content
-       :output  {}}
-      gen/->load-templates
-      gen/->apply-content-context
-      gen/->expand-templates
-      gen/->write-files!))
+(-> {:config  config
+     :content content
+     :output  {}}
+    gen/->load-templates
+    gen/->apply-content-context
+    gen/->expand-templates
+    gen/->write-files!))
 
 (defn build-this-website [] (build-site (config) (content)))
 

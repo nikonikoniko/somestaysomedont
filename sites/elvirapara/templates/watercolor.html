@@ -1,105 +1,31 @@
-<!doctype html>
-<html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watercolor | Elvira Para</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "base.html" %}
 
-    <link rel='stylesheet' href='style.css' />
+{% block title %}Watercolor{% endblock %}
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <!-- Place favicon.ico in the root directory -->
+{% block description %}
+{{blocks.about-watercolor}}
+{{blocks.about-elvira}}
+{% endblock %}
 
-  </head>
-  <body>
-    <!--[if lt IE 8]>
-      <p class="browserupgrade">
-      You are using an <strong>outdated</strong> browser. Please
-      <a href="http://browsehappy.com/">upgrade your browser</a> to improve
-      your experience.
-      </p>
-    <![endif]-->
-    <div class="menu">
-      <img class="logo" src="./resources/img/text_logo_ekp.png">
-      <ul>
-        <li><a href="./index.html">About</a></li>
-        <li><a href="./watercolor.html">Watercolor</a></li>
-        <li><a href="./encaustic.html">Encaustic</a></li>
-        <li><a href="./classes.html">Classes</a></li>
-        <li><a href="#">Artisan Shop</a></li>
-      </ul>
-    </div>
-    <div class="content">
-      <div class="content-header">
+{% block content-header %}
         <small class="page-subheader">Elvira Para</small>
         <h1 class="page-title page-title-with-image">Watercolor</h1>
         <img class="page-title-image" src="./resources/img/text_watercolor.png">
-      </div>
+{% endblock %}
 
+{% block content %}
       <p class="category-description">
-        Elvira has been working on various techniques of watercolor for 30 years.
-        She has taken classes in spaing, and done other things etc to get all of that
+        {{blocks.about-watercolor}}
       </p>
 
-      <div class="work">
-        <div class="image">
-          <img src="resources/img/watercolor/1.jpg" />
-        </div>
-            <div class="description">
-              watercolor, 35x40in.  drawn on the cape, winner of the 2013 watercolor queen award.
-              someone else commented something on this
-            </div>
-      </div>
+      {% for i in gallery-images.watercolor|sort-by:order %}
+      {% with subtext=i.subtext url=i.image-url %}
+        {% include "includes/work.html" %}
+      {% endwith %}
+      {% endfor %}
+{% endblock %}
 
-      <div class="work">
-        <div class="image">
-          <img src="resources/img/watercolor/2.jpg" />
-        </div>
-          <div class="description">
-                watercolor, 35x40in.  drawn on the cape, winner of the 2013 watercolor queen award.
-                someone else commented something on this
-           </div>
-      </div>
-
-      <div class="work">
-        <div class="image">
-          <img src="resources/img/watercolor/3.jpg" />
-        </div>
-            <div class="description">
-              watercolor, 35x40in.  drawn on the cape, winner of the 2013 watercolor queen award.
-              someone else commented something on this
-            </div>
-      </div>
-
-      <div class="work">
-        <div class="image">
-          <img src="resources/img/watercolor/4.jpg" />
-        </div>
-            <div class="description">
-              watercolor, 35x40in.  drawn on the cape, winner of the 2013 watercolor queen award.
-              someone else commented something on this
-            </div>
-      </div>
-
-
-      <div class="work" >
-        <div class="image" >
-          <img src="resources/img/watercolor/5.jpg" />
-        </div>
-            <div class="description" >
-              watercolor, 35x40in.drawn on the cape, winner of the 2013 watercolor queen award.
-              someone else commented something on this
-            </div>
-      </div>
-
-    </div>
-
-    <div class="side-content">
-
-    </div>
-
+{% block js %}
     <script type="text/javascript">
       let height = window.screen.height
 
@@ -114,6 +40,4 @@
         })
       })
       </script>
-
-  </body>
-</html>
+{% endblock %}
