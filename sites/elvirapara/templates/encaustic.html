@@ -3,23 +3,22 @@
 {% block title %}Encaustic{% endblock %}
 
 {% block description %}
- {{blocks.about-encaustic}}
+ {{blocks.about-acrylic}}
  {{blocks.about-elvira}}
 {% endblock %}
 
 {% block content-header %}
         <small class="page-subheader">Elvira Para</small>
-        <h1 class="page-title page-title-with-image">Encaustic</h1>
+        <h1 class="page-title page-title-with-image">Acrylic</h1>
         <img class="page-title-image" src="./resources/img/text_encaustic.png">
 {% endblock %}
 
 {% block content %}
       <p class="category-description">
-        {{blocks.about-encaustic}}
+        {{blocks.about-acrylic}}
       </p>
 
-      {% for i in gallery-images.encaustic|sort-by:order %}
-      {{i.order}}
+      {% for i in gallery-images.acrylic|sort-by:order %}
       {% with subtext=i.subtext url=i.image-url %}
         {% include "includes/work.html" %}
       {% endwith %}
