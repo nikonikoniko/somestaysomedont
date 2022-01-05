@@ -2,7 +2,6 @@
   (:require [gen.core :as gen]
             [somestaysomedont.contentful :as contentful]))
 
-
 (defn config [] {:template-dir "./sites/somestaysomedont/templates"
                  :output-dir   "./sites/somestaysomedont/_dist"})
 
