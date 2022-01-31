@@ -107,3 +107,12 @@ a:visited { color: var(--color-cyan); }
     text-align: center;
     font-size: 3rem;
 }
+.about {
+    background-color: var(--color-black);
+           font-size: 18px;
+           padding: 1rem;
+    max-width: 40rem;
+}
+.about p, .about h3, .about h2, .about h1 {
+    color: var(--color-white);
+}
